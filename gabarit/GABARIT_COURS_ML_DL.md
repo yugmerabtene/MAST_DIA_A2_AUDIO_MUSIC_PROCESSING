@@ -90,7 +90,7 @@ from scipy.stats import multivariate_normal
 ```
 
 **Explication du code**
-Ce code charge les bibliotheques utiles pour generer, visualiser ou calculer des elements du melange de gaussiennes. L'objectif est de relier la formule a une implementation concrète.
+Ce code charge les bibliothèques utiles pour générer, visualiser ou calculer des éléments du mélange de gaussiennes. L'objectif est de relier la formule à une implémentation concrète.
 ```
 
 ---
