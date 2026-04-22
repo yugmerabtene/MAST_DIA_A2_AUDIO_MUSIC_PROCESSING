@@ -1,3 +1,5 @@
 # Assets du lab 01
 
-- `exemple_cours.wav` : extrait audio court généré pour le cours.
+- `Games.wav` : fichier audio de référence utilisé pour le lab 01.
+
+Les scripts du lab convertissent automatiquement ce fichier en mono pour simplifier l'analyse pédagogique.

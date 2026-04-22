@@ -2,224 +2,119 @@
 
 ## Objectif
 
-Manipuler un extrait audio simple, visualiser sa forme d'onde et son spectrogramme, puis extraire quelques features de base.
-Ce lab reprend directement les notions du jour 1 : signal audio, forme d'onde, spectrogramme, ZCR, centre spectral et comparaison des représentations.
+Manipuler un vrai fichier audio, visualiser sa forme d'onde et son spectrogramme, puis extraire quelques features de base.
+
+Le fichier de référence du lab est `assets/Games.wav`.
+
+## Fichier audio
+
+- fichier : `assets/Games.wav`
+- nature du fichier : extrait audio réel
+- particularité : les scripts convertissent automatiquement le son en mono et n'analysent que les `20` premières secondes pour garder un affichage lisible et des calculs rapides
+
+## Scripts du lab
+
+- `scripts/01_load_signal.py`
+- `scripts/02_waveform_and_spectrogram.py`
+- `scripts/03_audio_features.py`
 
 ## Schéma du lab
 
 ```mermaid
 flowchart LR
-    A[Charger le fichier WAV] --> B[Voir la forme d'onde]
-    B --> C[Voir le spectrogramme]
-    C --> D[Extraire les features]
-    D --> E[Interpréter les résultats]
+    A[Games.wav] --> B[Charger le signal]
+    B --> C[Passer en mono]
+    C --> D[Voir la forme d'onde]
+    D --> E[Voir le spectrogramme]
+    E --> F[Calculer les features]
+    F --> G[Interpréter les résultats]
 ```
 
-Ce schéma donne la logique générale du lab avant de lire les étapes une par une.
+Ce schéma montre la logique du lab : on part d'un fichier audio brut, on le rend exploitable, puis on le transforme en représentations et en mesures numériques.
 
 ## Vocabulaire
 
 - **Signal audio** : suite de valeurs qui représente le son dans le temps.
-- **Librosa** : bibliothèque Python pour lire, visualiser et analyser un signal audio.
-- **Feature** : mesure numérique compacte extraite du signal.
+- **Mono** : un seul canal audio.
+- **Stéréo** : deux canaux audio, généralement gauche et droite.
 - **Forme d'onde** : lecture temporelle de l'amplitude.
 - **Spectrogramme** : lecture temps-fréquence de l'énergie.
+- **Feature** : mesure numérique compacte extraite du signal.
 - **ZCR** : nombre de changements de signe du signal.
-- **Zero crossing rate** : même chose que ZCR, utile pour mesurer le caractère plus ou moins agité d'un son.
-- **Centroid spectral** : fréquence moyenne pondérée par l'énergie.
-- **Centre spectral** : même chose que centroid spectral, il indique où l'énergie est concentrée.
-- **Bandwidth spectrale** : largeur de dispersion autour du centroid.
-- **STFT** : méthode pour observer l'évolution des fréquences dans le temps.
+- **Centre spectral** : zone moyenne où l'énergie du signal est concentrée.
+- **Bandwidth spectrale** : étendue de l'énergie autour du centre spectral.
+- **Harmoniques** : fréquences liées à la note principale du son.
 
-## Fichier audio
-
-L'extrait de référence est dans `assets/exemple_cours.wav`.
-
-## Etape 1 - Charger le signal
+## Étape 1 - Charger le signal
 
 **Résultat attendu**
-Lire le fichier audio et vérifier sa fréquence d'échantillonnage.
+Lire le fichier audio, connaître sa fréquence d'échantillonnage, son nombre de canaux et la durée analysée.
 
-**Lien avec la théorie**
-On passe de la notion abstraite de signal à une représentation numérique concrète.
+**Script**
 
-```python
-# Lecture du fichier audio de reference.
-from scipy.io import wavfile
-
-sr, y = wavfile.read("assets/exemple_cours.wav")
-print("sr =", sr)
-print("shape =", y.shape)
+```bash
+python3 scripts/01_load_signal.py
 ```
 
-**Explication du code**
-On charge le fichier audio et on verifie sa forme interne. C'est la première etape avant toute analyse du signal.
-
-**Interprétation du résultat**
-- `sr` doit afficher la fréquence d'échantillonnage.
-- `shape` indique combien d'échantillons contient le fichier.
-- Plus `shape` est grand, plus le fichier contient de données audio.
+**Ce qu'il faut observer**
+- la fréquence d'échantillonnage ;
+- la forme du tableau audio ;
+- si le son est mono ou stéréo ;
+- la durée réellement analysée.
 
 **Ce que cela signifie**
-On vérifie d'abord que le fichier est bien lu, puis on contrôle sa taille pour savoir si on travaille sur un extrait court ou long.
-On a donc une première confirmation que le signal audio est bien exploitable avant de faire des calculs plus avancés.
+Cette étape confirme que le fichier audio est correctement chargé et prêt pour les étapes suivantes.
 
-## Etape 2 - Visualiser la forme d'onde
+## Étape 2 - Visualiser la forme d'onde et le spectrogramme
 
 **Résultat attendu**
-Observer la variation d'amplitude dans le temps.
+Créer deux représentations visuelles du son : la forme d'onde et le spectrogramme.
 
-**Lien avec la théorie**
-La forme d'onde illustre directement l'énergie du signal au cours du temps.
+**Script**
 
-```python
-# Outil de tracé.
-import matplotlib.pyplot as plt
-# Lecture du fichier audio.
-from scipy.io import wavfile
-
-# Chargement du signal.
-sr, y = wavfile.read("assets/exemple_cours.wav")
-# Normalisation pour un affichage lisible.
-y = y.astype(float) / 32768.0
-# Axe temporel en secondes.
-t = [i / sr for i in range(len(y))]
-
-# Trace de la forme d'onde.
-plt.plot(t, y)
-plt.title("Forme d'onde")
-plt.xlabel("Temps (s)")
-plt.ylabel("Amplitude")
-plt.show()
+```bash
+python3 scripts/02_waveform_and_spectrogram.py
 ```
 
-**Explication du code**
-Cette étape visualise l'amplitude du signal dans le temps. Elle permet de voir la structure globale du morceau avant de passer au domaine fréquentiel.
+**Fichiers générés**
+- `outputs/waveform.png`
+- `outputs/spectrogram.png`
 
-**Interprétation du résultat**
-- La courbe montre où le son est fort ou faible.
-- Des pics très marqués peuvent signaler des attaques ou des changements brusques.
-- Une courbe plus régulière traduit souvent un son plus stable.
+**Ce qu'il faut observer**
+- dans la forme d'onde : les variations d'amplitude dans le temps ;
+- dans le spectrogramme : les zones de fréquences les plus actives ;
+- la différence entre une vue temporelle et une vue temps-fréquence.
 
 **Ce que cela signifie**
-La forme d'onde est une vue simple du signal. Elle ne dit pas encore quelles fréquences sont présentes, mais elle aide à repérer les variations globales.
-Elle correspond à la première lecture du son avant l'analyse fréquentielle.
+La forme d'onde dit quand le son est fort ou faible. Le spectrogramme montre quelles fréquences dominent selon le temps.
 
-## Etape 3 - Visualiser le spectrogramme
+## Étape 3 - Extraire des features audio
 
 **Résultat attendu**
-Voir comment l'énergie se répartit selon le temps et les fréquences.
+Calculer quelques nombres simples qui résument le comportement du son.
 
-**Lien avec la théorie**
-Le spectrogramme relie la partie temporelle à la partie fréquentielle du signal.
+**Script**
 
-```python
-# Calcul numérique.
-import numpy as np
-# Outil de tracé.
-import matplotlib.pyplot as plt
-# Calcul du spectrogramme.
-from scipy import signal
-# Lecture du fichier audio.
-from scipy.io import wavfile
-
-# Chargement et normalisation du signal.
-sr, y = wavfile.read("assets/exemple_cours.wav")
-y = y.astype(float) / 32768.0
-# STFT pour observer le signal par fenêtres.
-f, tt, Zxx = signal.stft(y, fs=sr, nperseg=1024)
-
-# Affichage du spectrogramme.
-plt.pcolormesh(tt, f, np.abs(Zxx), shading="gouraud")
-plt.title("Spectrogramme")
-plt.xlabel("Temps (s)")
-plt.ylabel("Fréquence (Hz)")
-plt.colorbar(label="Amplitude")
-plt.show()
+```bash
+python3 scripts/03_audio_features.py
 ```
 
-**Explication du code**
-Le spectrogramme montre comment l'énergie se répartit entre le temps et les fréquences. C'est utile pour repérer les changements de timbre, d'intensité ou de contenu harmonique.
-
-**Interprétation du résultat**
-- Les zones claires montrent là où l'énergie est forte.
-- L'axe vertical correspond aux fréquences.
-- L'axe horizontal correspond au temps.
-- C'est une vue très utile pour comparer plusieurs morceaux.
+**Ce qu'il faut observer**
+- la valeur du `ZCR` ;
+- la valeur du `centre spectral` ;
+- la valeur de la `bandwidth spectrale` ;
+- les principales fréquences dominantes affichées.
 
 **Ce que cela signifie**
-Le spectrogramme permet de voir comment le son évolue dans le temps et quelles fréquences dominent à chaque instant.
-Cette vue est essentielle pour comprendre la partie fréquentielle du cours.
+Ces nombres permettent de passer d'une écoute subjective du son à une description numérique exploitable pour l'analyse, la classification ou la recommandation.
 
-## Etape 4 - Extraire des features
+## Lien avec le cours
 
-**Résultat attendu**
-Calculer quelques descripteurs simples pour caractériser le son.
-
-**Lien avec la théorie**
-Ces features condensent l'information utile pour comparer deux sons ou préparer un modèle.
-
-**Pourquoi ces features ?**
-Le but est de transformer le son brut en variables exploitables pour comparer, classer ou recommander.
-
-**Comprendre ZCR et centre spectral**
-- Le **ZCR** augmente souvent quand le signal est plus bruité, plus percussif ou plus riche en variations rapides.
-- Le **centre spectral** monte quand l'énergie se déplace vers les hautes fréquences et baisse quand le son est plus grave ou plus sombre.
-
-**Ce qu'il faut comprendre avant de coder**
-- Le signal brut est trop long et trop riche pour être utilisé tel quel directement dans un modèle simple.
-- Une feature est un résumé du signal qui garde une information utile.
-- Plus les features sont pertinentes, plus le modèle aura de chances d'être efficace.
-
-```python
-# Calcul numérique.
-import numpy as np
-# Lecture du fichier audio.
-from scipy.io import wavfile
-
-# Chargement et normalisation du signal.
-sr, y = wavfile.read("assets/exemple_cours.wav")
-y = y.astype(float) / 32768.0
-
-# Zero crossing rate : nombre de changements de signe.
-zcr = np.mean(np.abs(np.diff(np.sign(y))) > 0)
-# Axe fréquentiel.
-freqs = np.fft.rfftfreq(len(y), d=1 / sr)
-# Spectre en amplitude.
-spec = np.abs(np.fft.rfft(y))
-spec_sum = spec.sum()
-# Centre spectral.
-centroid = (freqs * spec).sum() / spec_sum
-
-# Largeur spectrale autour du centre.
-bandwidth = np.sqrt(((freqs - centroid) ** 2 * spec).sum() / spec_sum)
-
-print("ZCR =", zcr)
-print("Centroid =", centroid)
-print("Bandwidth =", bandwidth)
-```
-
-**Explication du code**
-Ce bloc extrait des features simples à partir du signal. Elles compressent l'information audio dans quelques variables utiles pour comparer des morceaux ou alimenter un modèle.
-
-**Interprétation du résultat**
-- `ZCR` donne une idée de l'agitation du signal.
-- `Centroid` indique si l'énergie est plutôt grave ou aiguë.
-- `Bandwidth` indique si l'énergie est concentrée ou étalée.
-- Ces valeurs servent ensuite à comparer deux sons ou à nourrir un modèle.
-
-**Ce que cela signifie**
-Les features transforment un son brut en quelques nombres faciles à comparer. C'est ce qui permet de passer du signal à l'apprentissage automatique.
-Le but pédagogique est de passer d'une écoute subjective à une description numérique claire et réutilisable.
+Ce lab illustre directement le chapitre `Comprendre la structure musicale et les signaux audio (3H30)` puis le chapitre `Extraire les caractéristiques audio (3h30)` du jour 1.
 
 ## Bilan du lab
 
-- vérifier qu'un fichier audio est lisible ;
-- comprendre la forme d'onde ;
-- lire un spectrogramme ;
-- calculer des features simples ;
-- relier les nombres calculés à ce qu'on entend réellement.
-
-## Conclusion
-
-Le lab montre comment partir d'un fichier audio simple pour aller vers des représentations exploitables en traitement audio.
+- vérifier qu'un fichier audio réel est exploitable ;
+- comprendre la différence entre signal, forme d'onde et spectrogramme ;
+- extraire des features simples ;
+- relier les mesures calculées à ce que l'on entend dans le fichier.

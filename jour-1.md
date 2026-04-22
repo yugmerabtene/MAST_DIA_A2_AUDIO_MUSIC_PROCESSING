@@ -57,7 +57,7 @@ Ce schéma montre le trajet général du cours. On part du fichier audio, on l'o
 **Contexte**
 En analyse musicale, il faut savoir lire un extrait sonore avant de pouvoir en extraire des caractéristiques exploitables.
 C'est la base pour préparer des données audio avant toute classification ou recommandation.
-Le lab associé à ce chapitre utilise l'extrait `labs/lab-01/assets/exemple_cours.wav`.
+Le lab associé à ce chapitre utilise le fichier `labs/lab-01/assets/Games.wav`.
 Dans ce chapitre, on voit aussi comment un son se décrit à la fois dans le temps et dans les fréquences.
 
 **Tracer la forme d'onde**
@@ -92,6 +92,8 @@ Savoir expliquer à quoi sert Librosa dans un cours d'audio.
 
 **Code**
 
+Script correspondant : `labs/lab-01/scripts/02_waveform_and_spectrogram.py`
+
 ```python
 # Import des bibliothèques pour le calcul numérique et l'affichage.
 import numpy as np
@@ -102,10 +104,20 @@ from scipy.io import wavfile
 # Matplotlib sert à tracer la forme d'onde et le spectrogramme.
 import matplotlib.pyplot as plt
 
-# Chargement de l'extrait audio du lab.
-sr, y = wavfile.read("labs/lab-01/assets/exemple_cours.wav")
+# Chargement du fichier audio du lab.
+sr, y = wavfile.read("labs/lab-01/assets/Games.wav")
+
+# Conversion en mono si le fichier est stéréo.
+if y.ndim == 2:
+    y = y.mean(axis=1)
+
 # Conversion en flottants entre -1 et 1.
 y = y.astype(float) / 32768.0
+
+# Conservation d'un extrait court pour garder des figures lisibles.
+max_seconds = 20
+y = y[: min(len(y), int(sr * max_seconds))]
+
 # Durée du signal en secondes.
 duration = len(y) / sr
 # Axe temporel associé à chaque échantillon.
@@ -137,6 +149,7 @@ plt.show()
 **Explication du code**
 Ce bloc charge un extrait audio, affiche sa forme d'onde, puis calcule un spectrogramme pour visualiser l'information temps-frequence. L'objectif est de relier la notion de signal audio brut à une lecture plus technique du son.
 Le résultat attendu est de voir d'abord la courbe dans le temps, puis l'image du spectrogramme. La courbe montre l'amplitude, et le spectrogramme montre où se trouve l'énergie selon les fréquences.
+Le script du lab enregistre aussi ces figures dans `labs/lab-01/outputs/`.
 
 ## Extraire les caractéristiques audio (3h30)
 
@@ -229,16 +242,28 @@ Savoir relier les nombres calculés à ce qu'on entend dans le morceau.
 
 **Code**
 
+Script correspondant : `labs/lab-01/scripts/03_audio_features.py`
+
 ```python
 # Import des outils de calcul numérique.
 import numpy as np
 # Chargement du fichier audio de reference.
+from scipy.signal import find_peaks
 from scipy.io import wavfile
 
 # Lecture de l'extrait audio.
-sr, y = wavfile.read("labs/lab-01/assets/exemple_cours.wav")
+sr, y = wavfile.read("labs/lab-01/assets/Games.wav")
+
+# Conversion en mono si le fichier est stéréo.
+if y.ndim == 2:
+    y = y.mean(axis=1)
+
 # Normalisation du signal pour travailler en flottants.
 y = y.astype(float) / 32768.0
+
+# Conservation d'un extrait court pour accélérer les calculs.
+max_seconds = 20
+y = y[: min(len(y), int(sr * max_seconds))]
 
 # Zero crossing rate : nombre de changements de signe.
 zcr = np.mean(np.abs(np.diff(np.sign(y))) > 0)
@@ -252,14 +277,21 @@ centroid = (freqs * spec).sum() / spec_sum
 # Largeur spectrale autour du centroid.
 bandwidth = np.sqrt(((freqs - centroid) ** 2 * spec).sum() / spec_sum)
 
+# Quelques pics du spectre pour illustrer la structure harmonique.
+peaks, _ = find_peaks(spec, distance=50)
+top_peaks = peaks[np.argsort(spec[peaks])[-5:]]
+dominant_freqs = sorted(freqs[top_peaks])
+
 # Affichage des descripteurs calcules.
 print("ZCR:", zcr)
 print("Spectral centroid:", centroid)
 print("Spectral bandwidth:", bandwidth)
+print("Dominant frequencies:", [round(freq, 2) for freq in dominant_freqs])
 ```
 
 **Explication du code**
 Ce bloc transforme le signal audio en mesures compactes. Le ZCR donne une idée de l'agitation du signal, tandis que le centroid et la bandwidth décrivent la répartition de l'énergie dans les fréquences.
+L'extraction de quelques fréquences dominantes donne aussi une première lecture très simple de la structure harmonique du son.
 
 **Interprétation du résultat**
 - `ZCR` donne une idée de l'agitation du signal.
