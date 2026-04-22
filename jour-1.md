@@ -373,8 +373,74 @@ L'extraction de quelques fréquences dominantes donne aussi une première lectur
 - `Bandwidth` indique si l'énergie est concentrée ou étalée.
 - Ces valeurs servent ensuite à comparer deux sons ou à nourrir un modèle.
 
+**Exemples orientés projet final (Spotify-like)**
+
+**Exemple 1 - Construire un mini dataset de features**
+Objectif : transformer un morceau en plusieurs "mini-morceaux" (fenêtres temporelles), puis extraire des features pour obtenir une table exploitable par un modèle.
+
+```python
+# Exemple compact: table de features par fenêtres temporelles
+import numpy as np
+from scipy.io import wavfile
+
+sr, y = wavfile.read("labs/lab-01/assets/Games.wav")
+if y.ndim == 2:
+    y = y.mean(axis=1)
+y = y.astype(np.float32) / 32768.0
+y = y[: min(len(y), int(sr * 20))]
+
+window_sec = 5
+window_size = int(sr * window_sec)
+
+rows = []
+for i in range(0, len(y) - window_size + 1, window_size):
+    seg = y[i : i + window_size]
+    zcr = np.mean(np.abs(np.diff(np.sign(seg))) > 0)
+    freqs = np.fft.rfftfreq(len(seg), d=1 / sr)
+    spec = np.abs(np.fft.rfft(seg))
+    spec_sum = spec.sum()
+    centroid = (freqs * spec).sum() / spec_sum
+    bandwidth = np.sqrt(((freqs - centroid) ** 2 * spec).sum() / spec_sum)
+    rows.append((i // window_size, round(zcr, 5), round(centroid, 2), round(bandwidth, 2)))
+
+print("segment_id, zcr, centroid_hz, bandwidth_hz")
+for row in rows:
+    print(row)
+```
+
+Ce premier exemple prépare le terrain du projet final : chaque ligne peut être vue comme un "morceau" du dataset.
+
+**Exemple 2 - Comparer des profils sonores**
+Objectif : comparer deux segments du même morceau pour voir s'ils ont des signatures proches ou différentes.
+
+```python
+# Distance euclidienne simple entre deux segments
+import numpy as np
+
+v1 = np.array([0.05210, 1800.0, 2400.0])  # [zcr, centroid, bandwidth] segment A
+v2 = np.array([0.06130, 2200.0, 2900.0])  # [zcr, centroid, bandwidth] segment B
+
+distance = np.linalg.norm(v1 - v2)
+print("distance =", round(float(distance), 4))
+```
+
+Plus la distance est petite, plus les profils audio sont proches. Cette logique est exactement celle utilisée en recommandation.
+
+**Exemple 3 - Premier ranking de recommandations**
+Objectif : prendre un segment de référence et lister les segments les plus proches.
+
+Script correspondant : `labs/lab-01/scripts/04_project_ready_examples.py`
+
+Ce script enchaîne :
+- construction d'une matrice de features ;
+- comparaison de profils ;
+- ranking des segments les plus proches.
+
+Résultat attendu : obtenir une première version miniature d'un moteur de recommandation basé sur les descripteurs audio.
+
 ## Synthèse du jour
 
 - Lire un signal audio comme un objet numérique.
 - Relier notions musicales et représentation temps-fréquence.
 - Extraire des features simples à partir d'un fichier audio de référence.
+- Construire un mini dataset et un premier ranking de similarité pour préparer le projet final.

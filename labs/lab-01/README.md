@@ -47,6 +47,7 @@ Pour garder des labs stables :
 - `scripts/01_load_signal.py`
 - `scripts/02_waveform_and_spectrogram.py`
 - `scripts/03_audio_features.py`
+- `scripts/04_project_ready_examples.py`
 
 ## Schéma du lab
 
@@ -138,6 +139,25 @@ python3 scripts/03_audio_features.py
 **Ce que cela signifie**
 Ces nombres permettent de passer d'une écoute subjective du son à une description numérique exploitable pour l'analyse, la classification ou la recommandation.
 
+## Étape 4 - Exemples orientés projet final
+
+**Résultat attendu**
+Construire un mini dataset de features, comparer des profils sonores, puis produire un premier ranking de similarité.
+
+**Script**
+
+```bash
+python3 scripts/04_project_ready_examples.py
+```
+
+**Ce qu'il faut observer**
+- la table de features par segment ;
+- la distance entre deux segments ;
+- l'ordre des segments les plus proches du segment de référence.
+
+**Ce que cela signifie**
+Cette étape simule en miniature ce que fera le projet final : créer des descripteurs, calculer des distances et recommander les éléments les plus similaires.
+
 ## Lien avec le cours
 
 Ce lab illustre directement le chapitre `Comprendre la structure musicale et les signaux audio (3H30)` puis le chapitre `Extraire les caractéristiques audio (3h30)` du jour 1.
@@ -147,4 +167,5 @@ Ce lab illustre directement le chapitre `Comprendre la structure musicale et les
 - vérifier qu'un fichier audio réel est exploitable ;
 - comprendre la différence entre signal, forme d'onde et spectrogramme ;
 - extraire des features simples ;
-- relier les mesures calculées à ce que l'on entend dans le fichier.
+- relier les mesures calculées à ce que l'on entend dans le fichier ;
+- produire un premier ranking de similarité orienté recommandation.
