@@ -4,12 +4,15 @@
 
 **Introduction**
 Cette premiere partie pose les bases de la musique et du signal audio pour comprendre ce que l'on manipule ensuite en traitement audio.
+L'objectif est de passer d'une ecoute intuitive a une lecture technique du son.
 
 **Explication**
 On relie les notions musicales simples a leur traduction dans un signal numerique : hauteur, rythme, frequence, amplitude et duree.
+Une guitare, par exemple, permet d'illustrer concretement la difference entre une note jouee, sa frequence fondamentale et sa forme d'onde enregistrée.
 
 **Contexte**
 En analyse musicale, il faut savoir lire un extrait sonore avant de pouvoir en extraire des caracteristiques exploitables.
+C'est la base pour preparer des donnees audio avant toute classification ou recommandation.
 
 **Formule mathematique**
 
@@ -29,11 +32,13 @@ La frequence d'echantillonnage relie le nombre d'echantillons a la duree observe
 - `T` : duree du signal
 
 **Resultat attendu**
-L'etudiant sait faire le lien entre notions musicales et representation numerique d'un son.
+Savoir faire le lien entre notions musicales et representation numerique d'un son.
+Savoir expliquer ce que represente un signal audio et pourquoi sa structure temporelle et frequentielle compte.
 
 **Code**
 
 ```python
+import numpy as np
 import librosa
 import librosa.display
 import matplotlib.pyplot as plt
@@ -48,18 +53,28 @@ plt.figure(figsize=(10, 3))
 librosa.display.waveshow(y, sr=sr)
 plt.title("Forme d'onde")
 plt.show()
+
+plt.figure(figsize=(10, 3))
+D = librosa.amplitude_to_db(abs(librosa.stft(y)), ref=np.max)
+librosa.display.specshow(D, sr=sr, x_axis='time', y_axis='log')
+plt.colorbar(format='%+2.0f dB')
+plt.title("Spectrogramme")
+plt.show()
 ```
 
 ## 2. Extraire les caracteristiques audio
 
 **Introduction**
 Cette partie montre comment transformer un signal audio en descripteurs numeriques utilisables pour l'analyse et la classification.
+On cherche ici a representer un morceau par quelques mesures robustes plutot que par l'onde brute.
 
 **Explication**
 On extrait des mesures simples comme le zero crossing rate ou le centre spectral pour decrire le contenu sonore.
+Ces descripteurs resumeraient l'energie, la brillance ou l'activite du signal sous une forme compacte.
 
 **Contexte**
 Ces caracteristiques servent a comparer des morceaux ou a preparer un dataset pour un modele de machine learning.
+Dans un systeme musical, elles peuvent aider a distinguer des genres, des instruments ou des ambiances.
 
 **Formule mathematique**
 
@@ -79,7 +94,8 @@ Le zero crossing rate mesure combien de fois le signal change de signe.
 - `\mathbf{1}(...)` : fonction indicatrice
 
 **Resultat attendu**
-L'etudiant sait extraire et interpreter des features audio de base.
+Savoir extraire et interpreter des features audio de base.
+Savoir expliquer a quoi servent ces features dans une chaine d'analyse musicale.
 
 **Code**
 
@@ -93,9 +109,12 @@ zcr = librosa.feature.zero_crossing_rate(y)
 centroid = librosa.feature.spectral_centroid(y=y, sr=sr)
 bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr)
 
+tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
+
 print("ZCR:", zcr.mean())
 print("Spectral centroid:", centroid.mean())
 print("Spectral bandwidth:", bandwidth.mean())
+print("Tempo:", tempo)
 ```
 
 ## Synthese du jour
