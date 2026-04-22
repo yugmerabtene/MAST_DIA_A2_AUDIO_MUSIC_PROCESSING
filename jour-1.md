@@ -127,6 +127,10 @@ Savoir faire le lien entre notions musicales et représentation numérique d'un 
 Savoir expliquer ce que représente un signal audio et pourquoi sa structure temporelle et fréquentielle compte.
 Savoir expliquer à quoi sert Librosa dans un cours d'audio.
 
+**Scripts utilisés dans cette partie**
+- `labs/lab-01/scripts/01_load_signal.py` (chargement, mono/stéréo, durée analysée)
+- `labs/lab-01/scripts/02_waveform_and_spectrogram.py` (formes d'onde et spectrogramme)
+
 **Code**
 
 Script correspondant : `labs/lab-01/scripts/02_waveform_and_spectrogram.py`
