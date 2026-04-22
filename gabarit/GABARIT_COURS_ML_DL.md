@@ -39,6 +39,9 @@ Dire ce que le lecteur doit comprendre, visualiser ou savoir faire.
 ```python
 # code complet et executable
 ```
+
+**Explication du code**
+Expliquer en quelques phrases ce que fait le code, pourquoi il est utile et quel point theorique il illustre.
 ```
 
 ---
@@ -85,6 +88,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import multivariate_normal
 ```
+
+**Explication du code**
+Ce code charge les bibliotheques utiles pour generer, visualiser ou calculer des elements du melange de gaussiennes. L'objectif est de relier la formule a une implementation concrète.
 ```
 
 ---

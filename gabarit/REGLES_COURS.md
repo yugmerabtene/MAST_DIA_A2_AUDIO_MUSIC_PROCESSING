@@ -42,6 +42,17 @@ Pour une notion importante, suivre cet ordre si pertinent :
 
 - Ajouter du code seulement si le chapitre le justifie.
 - Le code doit être simple, lisible et directement exploitable.
+- Commenter le code de manière utile et sobre.
+- Ajouter juste après chaque bloc de code une courte explication du code et de son lien avec la théorie.
+- Préférer des exemples complets, exécutables et faciles à relire.
+
+## Lecture du code
+
+Chaque bloc de code doit être accompagné d'une lecture courte en dessous du bloc :
+
+- ce que fait le code ;
+- pourquoi il est là ;
+- ce que l'apprenant doit observer ou retenir.
 
 ## Priorite pedagogique du cours
 

@@ -50,19 +50,29 @@ Savoir expliquer ce que représente un signal audio et pourquoi sa structure tem
 **Code**
 
 ```python
+# Import des bibliotheques pour le calcul numerique et l'affichage.
 import numpy as np
+# Signal permet de calculer le spectrogramme.
 from scipy import signal
+# Lecture du fichier audio au format WAV.
 from scipy.io import wavfile
+# Matplotlib sert a tracer la forme d'onde et le spectrogramme.
 import matplotlib.pyplot as plt
 
+# Chargement de l'extrait audio du lab.
 sr, y = wavfile.read("labs/lab-01/assets/exemple_cours.wav")
+# Conversion en flottants entre -1 et 1.
 y = y.astype(float) / 32768.0
+# Duree du signal en secondes.
 duration = len(y) / sr
+# Axe temporel associe a chaque echantillon.
 t = np.linspace(0, duration, len(y), endpoint=False)
 
+# Affichage des infos de base.
 print("Fréquence d'échantillonnage:", sr)
 print("Durée (s):", duration)
 
+# Trace de la forme d'onde.
 plt.figure(figsize=(10, 3))
 plt.plot(t, y)
 plt.title("Forme d'onde")
@@ -70,6 +80,7 @@ plt.xlabel("Temps (s)")
 plt.ylabel("Amplitude")
 plt.show()
 
+# Calcul et affichage du spectrogramme.
 plt.figure(figsize=(10, 3))
 f, tt, Zxx = signal.stft(y, fs=sr, nperseg=1024)
 plt.pcolormesh(tt, f, np.abs(Zxx), shading='gouraud')
@@ -79,6 +90,9 @@ plt.xlabel("Temps (s)")
 plt.ylabel("Fréquence (Hz)")
 plt.show()
 ```
+
+**Explication du code**
+Ce bloc charge un extrait audio, affiche sa forme d'onde, puis calcule un spectrogramme pour visualiser l'information temps-frequence. L'objectif est de relier la notion de signal audio brut à une lecture plus technique du son.
 
 ## 2. Extraire les caractéristiques audio
 
@@ -135,24 +149,36 @@ Savoir relier les nombres calculés à ce qu'on entend dans le morceau.
 **Code**
 
 ```python
+# Import des outils de calcul numerique.
 import numpy as np
+# Chargement du fichier audio de reference.
 from scipy.io import wavfile
 
+# Lecture de l'extrait audio.
 sr, y = wavfile.read("labs/lab-01/assets/exemple_cours.wav")
+# Normalisation du signal pour travailler en flottants.
 y = y.astype(float) / 32768.0
 
+# Zero crossing rate : nombre de changements de signe.
 zcr = np.mean(np.abs(np.diff(np.sign(y))) > 0)
 
+# Transformation vers le domaine frequentiel.
 freqs = np.fft.rfftfreq(len(y), d=1 / sr)
 spec = np.abs(np.fft.rfft(y))
 spec_sum = spec.sum()
+# Centroid spectral : frequence moyenne ponderee par l'energie.
 centroid = (freqs * spec).sum() / spec_sum
+# Largeur spectrale autour du centroid.
 bandwidth = np.sqrt(((freqs - centroid) ** 2 * spec).sum() / spec_sum)
 
+# Affichage des descripteurs calcules.
 print("ZCR:", zcr)
 print("Spectral centroid:", centroid)
 print("Spectral bandwidth:", bandwidth)
 ```
+
+**Explication du code**
+Ce bloc transforme le signal audio en mesures compactes. Le ZCR donne une idee de l'agitation du signal, tandis que le centroid et la bandwidth décrivent la repartition de l'energie dans les frequences.
 
 ## Synthèse du jour
 

@@ -34,19 +34,28 @@ Savoir entraîner et évaluer un modèle supervisé simple sur des données audi
 **Code**
 
 ```python
+# Decoupage des donnees et entrainement d'un classifieur.
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
 
+# Separation train / test.
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
+# Modele de classification.
 model = RandomForestClassifier(random_state=42)
+# Apprentissage sur les donnees d'entrainement.
 model.fit(X_train, y_train)
 
+# Prediction sur les donnees de test.
 y_pred = model.predict(X_test)
+# Evaluation des performances.
 print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
 ```
+
+**Explication du code**
+Ce bloc montre le cycle classique du machine learning supervise : separation des donnees, apprentissage du modele, puis evaluation. Il illustre comment les features audio deviennent une entree exploitable pour la classification.
 
 ## 2. Construire un moteur de recommandation musicale
 
@@ -82,13 +91,20 @@ Savoir construire un système simple de recommandation à partir de descripteurs
 **Code**
 
 ```python
+# Mesure de distance entre morceaux.
 from sklearn.metrics.pairwise import euclidean_distances
 
+# Calcul des distances entre un morceau cible et la base de morceaux.
 distances = euclidean_distances([target_vector], feature_matrix)[0]
+# Selection des morceaux les plus proches.
 top_indices = distances.argsort()[:5]
 
+# Affichage des indices recommandes.
 print(top_indices)
 ```
+
+**Explication du code**
+Ce bloc implémente une recommandation par similarité. Plus la distance est faible, plus deux morceaux sont proches dans l'espace des features, ce qui soutient la logique de découverte musicale.
 
 ## Synthese du jour
 
