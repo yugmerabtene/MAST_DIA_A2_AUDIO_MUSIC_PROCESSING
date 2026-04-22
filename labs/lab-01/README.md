@@ -4,6 +4,18 @@
 
 Manipuler un extrait audio simple, visualiser sa forme d'onde et son spectrogramme, puis extraire quelques features de base.
 
+## Schéma du lab
+
+```mermaid
+flowchart LR
+    A[Charger le fichier WAV] --> B[Voir la forme d'onde]
+    B --> C[Voir le spectrogramme]
+    C --> D[Extraire les features]
+    D --> E[Interpréter les résultats]
+```
+
+Ce schéma donne la logique générale du lab avant de lire les étapes une par une.
+
 ## Vocabulaire
 
 - **Signal audio** : suite de valeurs qui représente le son dans le temps.
@@ -47,6 +59,9 @@ On charge le fichier audio et on verifie sa forme interne. C'est la première et
 - `shape` indique combien d'échantillons contient le fichier.
 - Plus `shape` est grand, plus le fichier contient de données audio.
 
+**Ce que cela signifie**
+On vérifie d'abord que le fichier est bien lu, puis on contrôle sa taille pour savoir si on travaille sur un extrait court ou long.
+
 ## Etape 2 - Visualiser la forme d'onde
 
 **Résultat attendu**
@@ -83,6 +98,9 @@ Cette étape visualise l'amplitude du signal dans le temps. Elle permet de voir 
 - La courbe montre où le son est fort ou faible.
 - Des pics très marqués peuvent signaler des attaques ou des changements brusques.
 - Une courbe plus régulière traduit souvent un son plus stable.
+
+**Ce que cela signifie**
+La forme d'onde est une vue simple du signal. Elle ne dit pas encore quelles fréquences sont présentes, mais elle aide à repérer les variations globales.
 
 ## Etape 3 - Visualiser le spectrogramme
 
@@ -125,6 +143,9 @@ Le spectrogramme montre comment l'énergie se répartit entre le temps et les fr
 - L'axe vertical correspond aux fréquences.
 - L'axe horizontal correspond au temps.
 - C'est une vue très utile pour comparer plusieurs morceaux.
+
+**Ce que cela signifie**
+Le spectrogramme permet de voir comment le son évolue dans le temps et quelles fréquences dominent à chaque instant.
 
 ## Etape 4 - Extraire des features
 
@@ -182,6 +203,9 @@ Ce bloc extrait des features simples à partir du signal. Elles compressent l'in
 - `Centroid` indique si l'énergie est plutôt grave ou aiguë.
 - `Bandwidth` indique si l'énergie est concentrée ou étalée.
 - Ces valeurs servent ensuite à comparer deux sons ou à nourrir un modèle.
+
+**Ce que cela signifie**
+Les features transforment un son brut en quelques nombres faciles à comparer. C'est ce qui permet de passer du signal à l'apprentissage automatique.
 
 ## Conclusion
 

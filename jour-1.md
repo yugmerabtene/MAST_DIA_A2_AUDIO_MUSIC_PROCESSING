@@ -23,6 +23,19 @@ Dans le cours, Librosa est l'outil de référence pour visualiser ces signaux ; 
 **Pourquoi commencer par là ?**
 Avant d'apprendre des formules ou des algorithmes, il faut savoir ce qu'est un signal audio, comment il est représenté et pourquoi on peut le transformer en nombres.
 
+**Schéma conceptuel**
+
+```mermaid
+flowchart LR
+    A[Fichier audio] --> B[Forme d'onde]
+    B --> C[Spectrogramme]
+    C --> D[Features]
+    D --> E[Classification]
+    D --> F[Recommandation]
+```
+
+Ce schéma montre le trajet général du cours. On part du fichier audio, on l'observe, on extrait des mesures, puis on les utilise pour la classification ou la recommandation.
+
 **Contexte**
 En analyse musicale, il faut savoir lire un extrait sonore avant de pouvoir en extraire des caractéristiques exploitables.
 C'est la base pour préparer des données audio avant toute classification ou recommandation.
@@ -128,6 +141,18 @@ Les features réduisent un signal complexe à quelques variables interprétables
 **Utiliser Librosa pour extraire des features fréquentiels et harmoniques**
 La logique de ce chapitre consiste à résumer le signal avec des descripteurs comme le zero crossing rate, le centroid spectral, la bandwidth et la structure harmonique.
 Librosa est souvent utilisé pour faire ce travail automatiquement sur de vrais fichiers audio.
+
+**Schéma des features**
+
+```mermaid
+flowchart TD
+    A[Signal audio] --> B[Zero Crossing Rate]
+    A --> C[Centre spectral]
+    A --> D[Bandwidth spectrale]
+    A --> E[Structure harmonique]
+```
+
+Ce schéma aide à comprendre que plusieurs mesures différentes décrivent un même morceau sous des angles différents.
 
 **Contexte**
 Ces caractéristiques servent à comparer des morceaux ou à préparer un dataset pour un modèle de machine learning.

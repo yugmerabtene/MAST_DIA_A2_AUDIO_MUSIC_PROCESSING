@@ -9,6 +9,19 @@
 - **Matrice de confusion** : tableau qui compare les classes réelles et prédites.
 - **Similarité** : proximité entre deux morceaux dans l'espace des features.
 
+**Schéma général du jour**
+
+```mermaid
+flowchart LR
+    A[Features + Labels] --> B[Train/Test split]
+    B --> C[Modèle supervisé]
+    C --> D[Matrice de confusion]
+    A --> E[Distance entre morceaux]
+    E --> F[Recommandation musicale]
+```
+
+Ce schéma montre les deux blocs du jour 2 : la classification supervisée et la recommandation par similarité.
+
 ## Appliquer le machine learning à la classification de genres (3h30)
 
 **Introduction**
@@ -32,6 +45,20 @@ Elle sert aussi à vérifier si certains genres sont faciles à distinguer à pa
 3. Séparer les données en apprentissage et en test.
 4. Entraîner le modèle.
 5. Mesurer ses erreurs.
+
+**Schéma de classification**
+
+```mermaid
+flowchart LR
+    A[Dataset audio] --> B[Features X]
+    A --> C[Labels y]
+    B --> D[Apprentissage]
+    C --> D
+    D --> E[Prédiction]
+    E --> F[Évaluation]
+```
+
+Ce schéma résume la logique du classifieur : des données d'entrée, un apprentissage, puis une évaluation sur des données inconnues.
 
 **Formule mathematique**
 
@@ -120,6 +147,18 @@ Dans une version plus avancée, cette logique peut être combinée à l'API Spot
 3. Calculer la distance entre ce morceau et tous les autres.
 4. Trier les distances.
 5. Garder les 5 morceaux les plus proches.
+
+**Schéma de recommandation**
+
+```mermaid
+flowchart LR
+    A[Morceau cible] --> B[Vecteur de features]
+    C[Base de morceaux] --> D[Distances]
+    B --> D
+    D --> E[Top 5 proches]
+```
+
+Ce schéma montre que la recommandation repose sur une comparaison mathématique entre vecteurs.
 
 **Formule mathematique**
 

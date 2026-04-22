@@ -37,6 +37,9 @@ Pour une notion importante, suivre cet ordre si pertinent :
 - Garder les mêmes intitulés quand ils sont utilisés.
 - Ne pas multiplier les longues explications inutiles.
 - Préférer des exemples réels et utiles.
+- Ajouter un schéma ou un diagramme quand cela aide à comprendre un concept.
+- Préférer Mermaid ou un schéma ASCII simple dans le markdown quand aucune image n'est nécessaire.
+- Toujours expliquer le schéma en dessous avec des phrases courtes et claires.
 
 ## Code
 

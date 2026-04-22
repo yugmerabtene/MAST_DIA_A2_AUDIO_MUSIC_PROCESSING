@@ -11,6 +11,9 @@ Ecrire en 1 a 3 phrases ce qu'est la notion et son objectif principal.
 **Explication**
 Donner l'intuition du concept avec une image mentale, une analogie ou une logique simple.
 
+**Schéma**
+Ajouter un schéma simple si cela aide à visualiser le flux ou la structure du concept.
+
 **Contexte**
 Donner un cas reel ou metier ou cette notion est utile.
 
