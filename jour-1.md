@@ -45,20 +45,57 @@ Avant d'apprendre des formules ou des algorithmes, il faut savoir ce qu'est un s
 
 ```mermaid
 flowchart LR
-    A[Fichier audio] --> B[Forme d'onde]
-    B --> C[Spectrogramme]
-    C --> D[Features]
-    D --> E[Classification]
-    D --> F[Recommandation]
+    A[Fichier audio brut\nWAV/MP3] --> B[Prétraitement\nmono + normalisation]
+    B --> C[Représentation temporelle\nForme d'onde]
+    B --> D[Représentation fréquentielle\nSpectrogramme/STFT]
+    C --> E[Features temporelles\nex: ZCR]
+    D --> F[Features fréquentielles\nex: centroid, bandwidth]
+    E --> G[Vecteur de features]
+    F --> G
+    G --> H[Classification de genres]
+    G --> I[Recommandation musicale]
 ```
 
 Ce schéma montre le trajet général du cours. On part du fichier audio, on l'observe, on extrait des mesures, puis on les utilise pour la classification ou la recommandation.
+
+**Schéma technique - axe temporel (forme d'onde)**
+
+```text
+Amplitude
+   ^
+   |            /\        /\
+   |           /  \  /\  /  \      y(t)
+   |_____/\___/____\/__\/____\__________> Temps (s)
+        t0        t1      t2
+
+Lecture:
+- Axe horizontal: le temps
+- Axe vertical: l'amplitude du signal
+- La courbe montre comment le son varie instant par instant
+```
+
+**Schéma technique - lecture de la formule d'echantillonnage**
+
+```text
+f_s = N / T
+
+f_s : fréquence d'échantillonnage (Hz = échantillons/seconde)
+N   : nombre total d'échantillons
+T   : durée totale du signal (secondes)
+
+Exemple visuel:
+si N = 96 000 et T = 2 s
+alors f_s = 96 000 / 2 = 48 000 Hz
+```
 
 **Contexte**
 En analyse musicale, il faut savoir lire un extrait sonore avant de pouvoir en extraire des caractéristiques exploitables.
 C'est la base pour préparer des données audio avant toute classification ou recommandation.
 Le lab associé à ce chapitre utilise le fichier `labs/lab-01/assets/Games.wav`.
 Dans ce chapitre, on voit aussi comment un son se décrit à la fois dans le temps et dans les fréquences.
+
+**Ressources audio pour trouver d'autres WAV**
+Pour varier les exemples, vous pouvez récupérer des sons sur SoundCloud, Freesound, Internet Archive, Wikimedia Commons ou des banques d'échantillons. Toujours vérifier la licence avant utilisation pédagogique.
 
 **Tracer la forme d'onde**
 La forme d'onde est la première lecture du signal. Elle permet de voir les variations d'amplitude et les grandes structures temporelles avant de passer au spectrogramme.
@@ -191,6 +228,24 @@ flowchart TD
 
 Ce schéma aide à comprendre que plusieurs mesures différentes décrivent un même morceau sous des angles différents.
 
+**Schéma technique - axe temps/frequence (spectrogramme)**
+
+```text
+Fréquence (Hz)
+   ^
+   |  ████░░░░░░
+   |  ██████░░░░      zone claire = énergie forte
+   |  ░███████░░
+   |  ░░░██████░
+   +-----------------------------> Temps (s)
+      t0    t1    t2    t3
+
+Lecture:
+- Axe horizontal: quand l'énergie apparaît
+- Axe vertical: à quelles fréquences l'énergie apparaît
+- Intensité/couleur: quantité d'énergie
+```
+
 **Contexte**
 Ces caractéristiques servent à comparer des morceaux ou à préparer un dataset pour un modèle de machine learning.
 Dans un système musical, elles peuvent aider à distinguer des genres, des instruments ou des ambiances.
@@ -217,6 +272,21 @@ Il permet de voir si certaines zones de fréquences sont stables, très actives 
 $$
 ZCR = \frac{1}{N-1} \sum_{n=1}^{N-1} \mathbf{1}(x_n x_{n-1} < 0)
 $$
+
+**Schéma technique - formule ZCR visualisée**
+
+```text
+Signal (extrait):   +   -   +   +   -   -   +
+                    |chg|chg|no |chg|no |chg|
+
+Idée du ZCR:
+1) parcourir deux échantillons consécutifs (x_{n-1}, x_n)
+2) vérifier si le signe change
+3) compter les changements
+4) normaliser par (N - 1)
+
+Plus il y a de changements de signe -> ZCR plus élevé
+```
 
 **Lecture de la formule**
 "Z C R égale un sur N moins 1 fois la somme de l'indicatrice de x n fois x n moins 1 inférieur à zéro."

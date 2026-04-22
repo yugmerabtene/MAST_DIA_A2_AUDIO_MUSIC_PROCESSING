@@ -13,3 +13,8 @@ Chaque lab contient son propre dossier avec :
 - un `README.md` guide pas à pas
 - un dossier `assets/` si un fichier audio ou une ressource est nécessaire
 - un script ou des extraits de code exécutables
+
+## Ressources audio externes
+
+Pour récupérer d'autres fichiers audio de test : SoundCloud, Freesound, Internet Archive ou Wikimedia Commons.
+Toujours vérifier la licence et les droits d'usage avant de réutiliser un son.

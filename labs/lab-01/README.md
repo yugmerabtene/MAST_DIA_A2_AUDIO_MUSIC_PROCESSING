@@ -12,6 +12,36 @@ Le fichier de référence du lab est `assets/Games.wav`.
 - nature du fichier : extrait audio réel
 - particularité : les scripts convertissent automatiquement le son en mono et n'analysent que les `20` premières secondes pour garder un affichage lisible et des calculs rapides
 
+## Ressources pour récupérer un WAV
+
+Pour tester avec d'autres sons, vous pouvez récupérer de l'audio depuis des plateformes publiques puis utiliser du `.wav`.
+
+### Sources possibles
+
+- **SoundCloud** : utile pour trouver des morceaux ou extraits, mais toujours vérifier les droits.
+- **Freesound** : banque de sons avec licences indiquées.
+- **Internet Archive (Audio)** : archives audio souvent réutilisables selon la licence.
+- **Wikimedia Commons (Audio)** : médias avec conditions de licence explicites.
+- **SampleSwap / Looperman** : échantillons audio pour pratique et tests.
+
+### Vérification licence (obligatoire)
+
+Avant usage en cours ou projet :
+
+- vérifier la licence (CC0, CC-BY, etc.) ;
+- vérifier l'usage pédagogique autorisé ;
+- vérifier les obligations d'attribution ;
+- éviter toute réutilisation non autorisée.
+
+### Recommandation technique
+
+Pour garder des labs stables :
+
+- format `.wav` ;
+- fréquence d'échantillonnage `44.1 kHz` ou `48 kHz` ;
+- extrait court (10 à 30 secondes) ;
+- mono ou stéréo (les scripts convertissent en mono).
+
 ## Scripts du lab
 
 - `scripts/01_load_signal.py`
