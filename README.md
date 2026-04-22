@@ -1,32 +1,32 @@
 # Audio and Music Processing
 
-Cours de Mastère 2 construit a partir du syllabus original du module **Audio and music processing**.
+Cours de Mastère 2 construit à partir du syllabus original du module **Audio and music processing**.
 
 ## Contexte
 
-Le module couvre l'analyse de signaux audio, l'extraction de caracteristiques musicales, l'apprentissage automatique pour la classification de genres, et la construction d'un moteur de recommandation musicale.
+Le module couvre l'analyse de signaux audio, l'extraction de caractéristiques musicales, l'apprentissage automatique pour la classification de genres, et la construction d'un moteur de recommandation musicale.
 
 ## Objectifs pedagogiques
 
-- Organiser un jeu de donnees en sous-ensembles d'entraînement et de test.
-- Exploiter plusieurs modeles d'apprentissage supervise pour la classification et la prediction.
-- Comparer les performances des algorithmes selon des metriques choisies.
+- Organiser un jeu de données en sous-ensembles d'entraînement et de test.
+- Exploiter plusieurs modèles d'apprentissage supervisé pour la classification et la prédiction.
+- Comparer les performances des algorithmes selon des métriques choisies.
 
 ## Organisation
 
 ### Jour 1
 
 1. Comprendre la structure musicale et les signaux audio
-2. Extraire les caracteristiques audio
+2. Extraire les caractéristiques audio
 
 ### Jour 2
 
-1. Appliquer le machine learning a la classification de genres
+1. Appliquer le machine learning à la classification de genres
 2. Construire un moteur de recommandation musicale
 
 ## Projet final
 
-Le projet final vise une application de type Spotify-like centree sur la decouverte musicale, la recommandation et l'exploitation de l'API Spotify.
+Le projet final vise une application de type Spotify-like centrée sur la découverte musicale, la recommandation et l'exploitation de l'API Spotify.
 
 ## Fichiers
 
@@ -43,4 +43,4 @@ Le projet final vise une application de type Spotify-like centree sur la decouve
 
 ## Regle de redaction
 
-Le cours suit le gabarit pedagogique du depot, avec une version alligee quand une notion ne se prete pas au format complet.
+Le cours suit le gabarit pédagogique du dépôt, avec une version allégée quand une notion ne se prête pas au format complet.

@@ -1,15 +1,15 @@
 # Jour 2
 
-## 1. Appliquer le machine learning a la classification de genres
+## 1. Appliquer le machine learning à la classification de genres
 
 **Introduction**
-Cette partie montre comment utiliser les features audio pour entrainer un modele de classification.
+Cette partie montre comment utiliser les features audio pour entraîner un modèle de classification.
 
 **Explication**
-L'idee est de representer chaque morceau par un vecteur de caracteristiques, puis d'apprendre a associer ce vecteur a un genre.
+L'idée est de représenter chaque morceau par un vecteur de caractéristiques, puis d'apprendre à associer ce vecteur à un genre.
 
 **Contexte**
-On peut utiliser cette approche pour categoriser automatiquement une bibliotheque musicale.
+On peut utiliser cette approche pour catégoriser automatiquement une bibliothèque musicale.
 
 **Formule mathematique**
 
@@ -18,18 +18,18 @@ $$
 $$
 
 **Lecture de la formule**
-"y chapeau egale arg max sur k de p de y egal k sachant x."
+"y chapeau égale arg max sur k de p de y égal k sachant x."
 
 **Sens de la formule**
-Le modele choisit la classe la plus probable a partir des caracteristiques du morceau.
+Le modèle choisit la classe la plus probable à partir des caractéristiques du morceau.
 
-**Decomposition mathematique**
+**Décomposition mathématique**
 - `\mathbf{x}` : vecteur de features audio
 - `y` : classe ou genre
-- `\hat{y}` : classe predite
+- `\hat{y}` : classe prédite
 
-**Resultat attendu**
-L'etudiant sait entrainer et evaluer un modele supervise simple sur des donnees audio.
+**Résultat attendu**
+Savoir entraîner et évaluer un modèle supervisé simple sur des données audio.
 
 **Code**
 
@@ -51,13 +51,13 @@ print(classification_report(y_test, y_pred))
 ## 2. Construire un moteur de recommandation musicale
 
 **Introduction**
-Cette partie utilise la similarite entre morceaux pour recommander des titres proches.
+Cette partie utilise la similarité entre morceaux pour recommander des titres proches.
 
 **Explication**
 On compare les vecteurs de features de plusieurs morceaux et on cherche ceux qui sont les plus proches du morceau cible.
 
 **Contexte**
-C'est le coeur du projet final de type Spotify-like centree sur la decouverte musicale.
+C'est le cœur du projet final de type Spotify-like centré sur la découverte musicale.
 
 **Formule mathematique**
 
@@ -66,18 +66,18 @@ d(\mathbf{x}, \mathbf{z}) = \sqrt{\sum_{i=1}^{d} (x_i - z_i)^2}
 $$
 
 **Lecture de la formule**
-"d de x et z egale racine carree de la somme pour i allant de 1 a d de x i moins z i au carre."
+"d de x et z égale racine carrée de la somme pour i allant de 1 à d de x i moins z i au carré."
 
 **Sens de la formule**
-Cette distance mesure a quel point deux morceaux sont proches dans l'espace des features.
+Cette distance mesure à quel point deux morceaux sont proches dans l'espace des features.
 
-**Decomposition mathematique**
-- `\mathbf{x}` : vecteur du morceau de reference
-- `\mathbf{z}` : vecteur du morceau compare
-- `d` : dimension de l'espace de caracteristiques
+**Décomposition mathématique**
+- `\mathbf{x}` : vecteur du morceau de référence
+- `\mathbf{z}` : vecteur du morceau comparé
+- `d` : dimension de l'espace de caractéristiques
 
-**Resultat attendu**
-L'etudiant sait construire un systeme simple de recommandation a partir de descripteurs audio.
+**Résultat attendu**
+Savoir construire un système simple de recommandation à partir de descripteurs audio.
 
 **Code**
 
@@ -92,6 +92,6 @@ print(top_indices)
 
 ## Synthese du jour
 
-- Preparer des donnees audio pour le ML.
-- Entrainer et evaluer un classifieur.
+- Préparer des données audio pour le ML.
+- Entraîner et évaluer un classifieur.
 - Recommander des morceaux par distance dans l'espace des features.

@@ -10,6 +10,6 @@ Structure des travaux pratiques du cours.
 
 Chaque lab contient son propre dossier avec :
 
-- un `README.md` guide pas a pas
-- un dossier `assets/` si un fichier audio ou une ressource est necessaire
-- un script ou des extraits de code executables
+- un `README.md` guide pas à pas
+- un dossier `assets/` si un fichier audio ou une ressource est nécessaire
+- un script ou des extraits de code exécutables

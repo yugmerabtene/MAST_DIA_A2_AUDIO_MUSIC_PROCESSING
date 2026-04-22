@@ -2,9 +2,9 @@
 
 ## Principe
 
-Rediger des chapitres clairs, progressifs et homogenes, adaptes au cours courant.
+Rédiger des chapitres clairs, progressifs et homogènes, adaptés au cours courant.
 
-Ce fichier est une adaptation legere d'un gabarit plus general. Il ne faut pas y appliquer automatiquement les reflexes d'un autre cours si le sujet ne s'y prete pas.
+Ce fichier est une adaptation légère d'un gabarit plus général. Il ne faut pas y appliquer automatiquement les réflexes d'un autre cours si le sujet ne s'y prête pas.
 
 ## Structure par defaut
 
@@ -16,35 +16,36 @@ Pour une notion importante, suivre cet ordre si pertinent :
 4. Formule mathematique
 5. Lecture de la formule
 6. Sens de la formule
-7. Decomposition mathematique
-8. Resultat attendu
+7. Décomposition mathématique
+8. Résultat attendu
 9. Code
 
 ## Adaptation
 
-- Si le chapitre ne se prete pas au format complet, utiliser une version allegee.
+- Si le chapitre ne se prête pas au format complet, utiliser une version allégée.
 - Ne pas forcer des blocs inutiles.
-- Garder au minimum : Introduction, Explication, Contexte, Resultat attendu.
-- Le bloc `Formule mathematique` reste present seulement si utile. Sinon, mettre un formalisme minimal ou l'omettre si cela n'apporte rien.
-- Pour ce cours, privilegier les notions liees a l'audio, a la musique, aux features, au machine learning et a la recommandation.
-- La partie musicale peut etre expliquee de maniere simple et concrete, sans jargon inutile.
+- Garder au minimum : Introduction, Explication, Contexte, Résultat attendu.
+- Le bloc `Formule mathematique` reste présent seulement si utile. Sinon, mettre un formalisme minimal ou l'omettre si cela n'apporte rien.
+- Pour ce cours, privilégier les notions liées à l'audio, à la musique, aux features, au machine learning et à la recommandation.
+- La partie musicale peut être expliquée de manière simple et concrète, sans jargon inutile.
 
 ## Style
 
-- Francais clair et technique.
+- Français clair et technique.
+- Respecter l'orthographe française et conserver les accents.
 - Aller du simple au concret, puis au formel.
-- Garder les memes intitulés quand ils sont utilises.
+- Garder les mêmes intitulés quand ils sont utilisés.
 - Ne pas multiplier les longues explications inutiles.
-- Preferer des exemples reels et utiles.
+- Préférer des exemples réels et utiles.
 
 ## Code
 
 - Ajouter du code seulement si le chapitre le justifie.
-- Le code doit etre simple, lisible et directement exploitable.
+- Le code doit être simple, lisible et directement exploitable.
 
 ## Priorite pedagogique du cours
 
 1. Cohérence avec le syllabus
-2. Clarte pedagogique
+2. Clarté pédagogique
 3. Pertinence du format
 4. Rigueur technique
