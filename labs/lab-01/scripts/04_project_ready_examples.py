@@ -14,7 +14,7 @@ def load_audio_excerpt():
     # Lecture du fichier audio.
     sr, y = wavfile.read(AUDIO_PATH)
 
-    # Conversion en mono si stereo.
+    # Conversion en mono si stéréo.
     if y.ndim == 2:
         y = y.mean(axis=1)
 
@@ -71,13 +71,13 @@ def main():
             round(float(row[3]), 6),
         )
 
-    # Exemple de comparaison de profils sonores.
+    # Comparaison de profils sonores.
     if len(matrix) >= 2:
         dist_0_1 = np.linalg.norm(matrix[0] - matrix[1])
         print("\n=== Comparaison de profils ===")
         print("distance(segment_0, segment_1) =", round(float(dist_0_1), 4))
 
-    # Exemple de ranking de recommandations.
+    # Ranking de recommandations.
     ref_idx = 0
     distances = np.linalg.norm(matrix - matrix[ref_idx], axis=1)
     ranking = np.argsort(distances)

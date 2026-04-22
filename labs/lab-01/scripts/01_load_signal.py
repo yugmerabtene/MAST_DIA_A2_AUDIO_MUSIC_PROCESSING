@@ -16,14 +16,14 @@ def main():
     # Nombre de canaux avant conversion.
     channels = 1 if y.ndim == 1 else y.shape[1]
 
-    # Passage en mono si le fichier est stereo.
+    # Passage en mono si le fichier est stéréo.
     if y.ndim == 2:
         y = y.mean(axis=1)
 
     # Normalisation entre -1 et 1.
     y = y.astype(np.float32) / 32768.0
 
-    # Limitation a un extrait court pour le lab.
+    # Limitation à un extrait court pour le lab.
     max_samples = min(len(y), int(sr * MAX_SECONDS))
     y = y[:max_samples]
     duration = len(y) / sr
