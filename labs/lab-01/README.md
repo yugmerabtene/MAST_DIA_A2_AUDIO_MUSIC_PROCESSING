@@ -3,6 +3,7 @@
 ## Objectif
 
 Manipuler un extrait audio simple, visualiser sa forme d'onde et son spectrogramme, puis extraire quelques features de base.
+Ce lab reprend directement les notions du jour 1 : signal audio, forme d'onde, spectrogramme, ZCR, centre spectral et comparaison des représentations.
 
 ## Schéma du lab
 
@@ -61,6 +62,7 @@ On charge le fichier audio et on verifie sa forme interne. C'est la première et
 
 **Ce que cela signifie**
 On vérifie d'abord que le fichier est bien lu, puis on contrôle sa taille pour savoir si on travaille sur un extrait court ou long.
+On a donc une première confirmation que le signal audio est bien exploitable avant de faire des calculs plus avancés.
 
 ## Etape 2 - Visualiser la forme d'onde
 
@@ -101,6 +103,7 @@ Cette étape visualise l'amplitude du signal dans le temps. Elle permet de voir 
 
 **Ce que cela signifie**
 La forme d'onde est une vue simple du signal. Elle ne dit pas encore quelles fréquences sont présentes, mais elle aide à repérer les variations globales.
+Elle correspond à la première lecture du son avant l'analyse fréquentielle.
 
 ## Etape 3 - Visualiser le spectrogramme
 
@@ -146,6 +149,7 @@ Le spectrogramme montre comment l'énergie se répartit entre le temps et les fr
 
 **Ce que cela signifie**
 Le spectrogramme permet de voir comment le son évolue dans le temps et quelles fréquences dominent à chaque instant.
+Cette vue est essentielle pour comprendre la partie fréquentielle du cours.
 
 ## Etape 4 - Extraire des features
 
@@ -206,6 +210,15 @@ Ce bloc extrait des features simples à partir du signal. Elles compressent l'in
 
 **Ce que cela signifie**
 Les features transforment un son brut en quelques nombres faciles à comparer. C'est ce qui permet de passer du signal à l'apprentissage automatique.
+Le but pédagogique est de passer d'une écoute subjective à une description numérique claire et réutilisable.
+
+## Bilan du lab
+
+- vérifier qu'un fichier audio est lisible ;
+- comprendre la forme d'onde ;
+- lire un spectrogramme ;
+- calculer des features simples ;
+- relier les nombres calculés à ce qu'on entend réellement.
 
 ## Conclusion
 

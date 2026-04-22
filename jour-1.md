@@ -11,9 +11,19 @@
 - **Feature** : caractère numérique extrait du signal pour décrire le son de façon compacte.
 - **Feature engineering** : choix et calcul des features utiles pour la suite du projet.
 
+**Ce que ce chapitre couvre exactement**
+- les notions de théorie musicale de base : notes, gammes, accords, rythmes, tempo, mesures ;
+- les composants temporels et fréquentiels d'un signal sonore : fréquence d'échantillonnage, amplitude, durée ;
+- la visualisation d'un extrait musical dans le temps et dans les fréquences ;
+- la lecture de la forme d'onde ;
+- l'extraction de features fréquentiels et harmoniques ;
+- l'analyse des spectrogrammes ;
+- la comparaison des profils sonores de différents genres musicaux.
+
 **Introduction**
 Cette première partie pose les bases de la musique et du signal audio pour comprendre ce que l'on manipule ensuite en traitement audio.
 L'objectif est de passer d'une écoute intuitive à une lecture technique du son.
+Avant de faire des calculs, il faut savoir reconnaître ce que représente un son, comment il est structuré, et pourquoi deux morceaux peuvent être comparés numériquement.
 
 **Explication**
 On relie les notions musicales simples à leur traduction dans un signal numérique : hauteur, rythme, fréquence, amplitude et durée.
@@ -22,6 +32,14 @@ Dans le cours, Librosa est l'outil de référence pour visualiser ces signaux ; 
 
 **Pourquoi commencer par là ?**
 Avant d'apprendre des formules ou des algorithmes, il faut savoir ce qu'est un signal audio, comment il est représenté et pourquoi on peut le transformer en nombres.
+
+**Les notions musicales en pratique**
+- **Notes** : hauteurs sonores distinctes.
+- **Gammes** : ensembles de notes organisées selon une logique musicale.
+- **Accords** : plusieurs notes jouées ensemble.
+- **Rythmes** : organisation des durées dans le temps.
+- **Tempo** : vitesse globale du morceau.
+- **Mesures** : découpage du temps musical en unités régulières.
 
 **Schéma conceptuel**
 
@@ -40,10 +58,12 @@ Ce schéma montre le trajet général du cours. On part du fichier audio, on l'o
 En analyse musicale, il faut savoir lire un extrait sonore avant de pouvoir en extraire des caractéristiques exploitables.
 C'est la base pour préparer des données audio avant toute classification ou recommandation.
 Le lab associé à ce chapitre utilise l'extrait `labs/lab-01/assets/exemple_cours.wav`.
+Dans ce chapitre, on voit aussi comment un son se décrit à la fois dans le temps et dans les fréquences.
 
 **Tracer la forme d'onde**
 La forme d'onde est la première lecture du signal. Elle permet de voir les variations d'amplitude et les grandes structures temporelles avant de passer au spectrogramme.
 Si la forme d'onde est très dense ou très irrégulière, cela donne déjà une première idée du comportement du son.
+Elle sert à répondre à une question simple : quand le son est-il fort, quand est-il faible, et comment évolue-t-il dans le temps ?
 
 **Formule mathematique**
 
@@ -135,12 +155,16 @@ Le **centre spectral** indique à quelle fréquence l'énergie du signal est pri
 - Le **centre spectral** parle de la position de l'énergie dans les fréquences.
 - Ces deux mesures donnent une première description numérique du son.
 
+**Structure harmonique**
+La structure harmonique décrit les fréquences liées à une note fondamentale et aux harmoniques qui l'accompagnent. C'est ce qui donne au son sa couleur ou son timbre.
+
 **Pourquoi ces features ?**
 Les features réduisent un signal complexe à quelques variables interprétables. Elles rendent possible la comparaison entre morceaux et l'entraînement d'un modèle.
 
 **Utiliser Librosa pour extraire des features fréquentiels et harmoniques**
 La logique de ce chapitre consiste à résumer le signal avec des descripteurs comme le zero crossing rate, le centroid spectral, la bandwidth et la structure harmonique.
 Librosa est souvent utilisé pour faire ce travail automatiquement sur de vrais fichiers audio.
+Cette bibliothèque est importante parce qu'elle évite d'écrire tout le traitement audio à la main, tout en donnant accès à des mesures standard du domaine musical.
 
 **Schéma des features**
 
@@ -161,6 +185,7 @@ Dans un système musical, elles peuvent aider à distinguer des genres, des inst
 **Comparer les profils sonores de différents genres musicaux**
 En observant les features et les spectrogrammes de plusieurs morceaux, on peut repérer des signatures sonores différentes selon les genres. Cette comparaison prépare directement le terrain pour la classification.
 Par exemple, un morceau très percussif n'aura pas la même signature qu'un morceau très mélodique ou très harmonique.
+L'idée est de voir qu'un genre n'est pas seulement un nom : c'est aussi une certaine organisation du son dans le temps et dans les fréquences.
 
 **Éléments techniques importants**
 - **ZCR** : donne une idée de l'agitation du signal.
