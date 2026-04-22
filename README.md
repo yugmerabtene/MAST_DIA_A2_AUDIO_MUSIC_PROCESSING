@@ -16,13 +16,13 @@ Le module couvre l'analyse de signaux audio, l'extraction de caractéristiques m
 
 ### Jour 1
 
-1. Comprendre la structure musicale et les signaux audio
-2. Extraire les caractéristiques audio
+1. Comprendre la structure musicale et les signaux audio (3H30)
+2. Extraire les caractéristiques audio (3h30)
 
 ### Jour 2
 
-1. Appliquer le machine learning à la classification de genres
-2. Construire un moteur de recommandation musicale
+1. Appliquer le machine learning à la classification de genres (3h30)
+2. Construire un moteur de recommandation musicale (3h30)
 
 ## Projet final
 

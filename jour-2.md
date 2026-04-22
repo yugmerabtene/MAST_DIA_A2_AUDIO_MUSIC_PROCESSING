@@ -9,7 +9,7 @@
 - **Matrice de confusion** : tableau qui compare les classes réelles et prédites.
 - **Similarité** : proximité entre deux morceaux dans l'espace des features.
 
-## 1. Appliquer le machine learning à la classification de genres
+## Appliquer le machine learning à la classification de genres (3h30)
 
 **Introduction**
 Cette partie montre comment utiliser les features audio pour entraîner un modèle de classification.
@@ -58,7 +58,10 @@ Dans le code, `fit` correspond à l'apprentissage de cette règle, puis `predict
 Random Forest est robuste, simple à utiliser et permet déjà d'obtenir un bon point de départ sur des features audio tabulaires.
 
 **Pourquoi tester d'autres modèles ?**
-k-NN, Random Forest ou d'autres classifieurs ne réagissent pas pareil aux mêmes features. Le but est de comparer leurs performances.
+k-NN, Random Forest ou d'autres classifieurs ne réagissent pas pareil aux mêmes features. Le but est de comparer leurs performances sur la même base de données.
+
+**Comparer les performances des algorithmes**
+On ne choisit pas un modèle uniquement parce qu'il fonctionne. On le compare avec d'autres à l'aide de métriques comme la précision, le rappel, le score F1 et la matrice de confusion.
 
 **Résultat attendu**
 Savoir entraîner et évaluer un modèle supervisé simple sur des données audio.
@@ -97,7 +100,7 @@ La matrice de confusion permet de voir où le modèle confond certains genres, t
 - quels genres sont souvent confondus ;
 - si certaines classes sont déséquilibrées ou plus difficiles à prédire.
 
-## 2. Construire un moteur de recommandation musicale
+## Construire un moteur de recommandation musicale (3h30)
 
 **Introduction**
 Cette partie utilise la similarité entre morceaux pour recommander des titres proches.

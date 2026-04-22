@@ -1,6 +1,6 @@
 # Jour 1
 
-## 1. Comprendre la structure musicale et les signaux audio
+## Comprendre la structure musicale et les signaux audio (3H30)
 
 **Notions clés**
 - **Signal audio** : suite de valeurs qui représente le son dans le temps.
@@ -17,11 +17,15 @@ L'objectif est de passer d'une écoute intuitive à une lecture technique du son
 **Explication**
 On relie les notions musicales simples à leur traduction dans un signal numérique : hauteur, rythme, fréquence, amplitude et durée.
 Une guitare, par exemple, permet d'illustrer concrètement la différence entre une note jouée, sa fréquence fondamentale et sa forme d'onde enregistrée.
+Dans le cours, Librosa est l'outil de référence pour visualiser ces signaux ; ici, le code utilise SciPy pour rester exécutable dans le dépôt.
 
 **Contexte**
 En analyse musicale, il faut savoir lire un extrait sonore avant de pouvoir en extraire des caractéristiques exploitables.
 C'est la base pour préparer des données audio avant toute classification ou recommandation.
 Le lab associé à ce chapitre utilise l'extrait `labs/lab-01/assets/exemple_cours.wav`.
+
+**Tracer la forme d'onde**
+La forme d'onde est la première lecture du signal. Elle permet de voir les variations d'amplitude et les grandes structures temporelles avant de passer au spectrogramme.
 
 **Formule mathematique**
 
@@ -94,7 +98,7 @@ plt.show()
 **Explication du code**
 Ce bloc charge un extrait audio, affiche sa forme d'onde, puis calcule un spectrogramme pour visualiser l'information temps-frequence. L'objectif est de relier la notion de signal audio brut à une lecture plus technique du son.
 
-## 2. Extraire les caractéristiques audio
+## Extraire les caractéristiques audio (3h30)
 
 **Introduction**
 Cette partie montre comment transformer un signal audio en descripteurs numériques utilisables pour l'analyse et la classification.
@@ -107,16 +111,26 @@ Ces descripteurs résument l'énergie, la brillance ou l'activité du signal sou
 **Pourquoi ces features ?**
 Les features réduisent un signal complexe à quelques variables interprétables. Elles rendent possible la comparaison entre morceaux et l'entraînement d'un modèle.
 
+**Utiliser Librosa pour extraire des features fréquentiels et harmoniques**
+La logique de ce chapitre consiste à résumer le signal avec des descripteurs comme le zero crossing rate, le centroid spectral, la bandwidth et la structure harmonique.
+
 **Contexte**
 Ces caractéristiques servent à comparer des morceaux ou à préparer un dataset pour un modèle de machine learning.
 Dans un système musical, elles peuvent aider à distinguer des genres, des instruments ou des ambiances.
+
+**Comparer les profils sonores de différents genres musicaux**
+En observant les features et les spectrogrammes de plusieurs morceaux, on peut repérer des signatures sonores différentes selon les genres. Cette comparaison prépare directement le terrain pour la classification.
 
 **Éléments techniques importants**
 - **ZCR** : donne une idée de l'agitation du signal.
 - **Centroid spectral** : mesure où se concentre l'énergie dans les fréquences.
 - **Bandwidth spectrale** : mesure l'étendue de cette énergie.
+- **Structure harmonique** : décrit les fréquences liées à la fondamentale et à ses harmoniques.
 - **STFT** : découpe le signal en petites fenêtres pour observer son évolution dans le temps.
 - **FFT** : transforme le signal du temps vers les fréquences.
+
+**Analyser les spectrogrammes**
+Le spectrogramme aide à voir comment les harmoniques évoluent dans le temps et à comparer plus facilement deux genres musicaux.
 
 **Formule mathematique**
 
