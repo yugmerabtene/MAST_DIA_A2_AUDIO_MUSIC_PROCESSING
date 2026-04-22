@@ -1,6 +1,6 @@
 # Jour 1
 
-1. Comprendre la structure musicale et les signaux audio
+## 1. Comprendre la structure musicale et les signaux audio
 
 **Introduction**
 Cette premiere partie pose les bases de la musique et du signal audio pour comprendre ce que l'on manipule ensuite en traitement audio.
@@ -50,7 +50,7 @@ plt.title("Forme d'onde")
 plt.show()
 ```
 
-2. Extraire les caracteristiques audio
+## 2. Extraire les caracteristiques audio
 
 **Introduction**
 Cette partie montre comment transformer un signal audio en descripteurs numeriques utilisables pour l'analyse et la classification.
@@ -97,3 +97,9 @@ print("ZCR:", zcr.mean())
 print("Spectral centroid:", centroid.mean())
 print("Spectral bandwidth:", bandwidth.mean())
 ```
+
+## Synthese du jour
+
+- Lire un signal audio comme un objet numerique.
+- Relier notions musicales et representation temps-frequence.
+- Extraire des features simples avec Librosa.

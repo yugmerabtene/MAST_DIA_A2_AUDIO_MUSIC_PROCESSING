@@ -1,6 +1,6 @@
 # Jour 2
 
-1. Appliquer le machine learning a la classification de genres
+## 1. Appliquer le machine learning a la classification de genres
 
 **Introduction**
 Cette partie montre comment utiliser les features audio pour entrainer un modele de classification.
@@ -48,7 +48,7 @@ print(confusion_matrix(y_test, y_pred))
 print(classification_report(y_test, y_pred))
 ```
 
-2. Construire un moteur de recommandation musicale
+## 2. Construire un moteur de recommandation musicale
 
 **Introduction**
 Cette partie utilise la similarite entre morceaux pour recommander des titres proches.
@@ -89,3 +89,9 @@ top_indices = distances.argsort()[:5]
 
 print(top_indices)
 ```
+
+## Synthese du jour
+
+- Preparer des donnees audio pour le ML.
+- Entrainer et evaluer un classifieur.
+- Recommander des morceaux par distance dans l'espace des features.
