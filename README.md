@@ -32,8 +32,14 @@ Le projet final vise une application de type Spotify-like centree sur la decouve
 
 - `jour-1.md`
 - `jour-2.md`
+- `labs/README.md`
+- `labs/lab-01/README.md`
 - `SYLLABUS_MAST_DIA_A2_AUDIO_MUSIC_PROCESSING.md`
 - `gabarit/REGLES_COURS.md`
+
+## Labs
+
+- `labs/lab-01/` : signaux audio, visualisation et features de base.
 
 ## Regle de redaction
 

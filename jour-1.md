@@ -13,6 +13,7 @@ Une guitare, par exemple, permet d'illustrer concretement la difference entre un
 **Contexte**
 En analyse musicale, il faut savoir lire un extrait sonore avant de pouvoir en extraire des caracteristiques exploitables.
 C'est la base pour preparer des donnees audio avant toute classification ou recommandation.
+Le lab associe a ce chapitre utilise l'extrait `labs/lab-01/assets/exemple_cours.wav`.
 
 **Formule mathematique**
 
@@ -26,10 +27,13 @@ $$
 **Sens de la formule**
 La frequence d'echantillonnage relie le nombre d'echantillons a la duree observee.
 
+**Lien avec la theorie**
+Plus la frequence d'echantillonnage est elevee, plus le signal est detaille dans le temps.
+
 **Decomposition mathematique**
-- `f_s` : frequence d'echantillonnage
-- `N` : nombre d'echantillons
-- `T` : duree du signal
+- `f_s` : frequence d'echantillonnage en hertz
+- `N` : nombre total d'echantillons
+- `T` : duree du signal en secondes
 
 **Resultat attendu**
 Savoir faire le lien entre notions musicales et representation numerique d'un son.
@@ -40,12 +44,13 @@ Savoir expliquer ce que represente un signal audio et pourquoi sa structure temp
 ```python
 import numpy as np
 from scipy import signal
+from scipy.io import wavfile
 import matplotlib.pyplot as plt
 
-sr = 22050
-duration = 2.0
-t = np.linspace(0, duration, int(sr * duration), endpoint=False)
-y = 0.6 * np.sin(2 * np.pi * 440 * t) + 0.3 * np.sin(2 * np.pi * 660 * t)
+sr, y = wavfile.read("labs/lab-01/assets/exemple_cours.wav")
+y = y.astype(float) / 32768.0
+duration = len(y) / sr
+t = np.linspace(0, duration, len(y), endpoint=False)
 
 print("Frequence d'echantillonnage:", sr)
 print("Duree (s):", duration)
@@ -93,10 +98,13 @@ $$
 **Sens de la formule**
 Le zero crossing rate mesure combien de fois le signal change de signe.
 
+**Lien avec la theorie**
+Un ZCR eleve correspond souvent a un signal plus agite ou plus bruité, tandis qu'un ZCR faible correspond a un signal plus stable.
+
 **Decomposition mathematique**
-- `N` : nombre d'echantillons
-- `x_n` : echantillon numero n
-- `\mathbf{1}(...)` : fonction indicatrice
+- `N` : nombre total d'echantillons pris en compte
+- `x_n` : valeur de l'echantillon numero `n`
+- `1(x_n x_{n-1} < 0)` : vaut `1` si le signal change de signe entre deux echantillons consecutifs, sinon `0`
 
 **Resultat attendu**
 Savoir extraire et interpreter des features audio de base.
@@ -106,14 +114,10 @@ Savoir expliquer a quoi servent ces features dans une chaine d'analyse musicale.
 
 ```python
 import numpy as np
+from scipy.io import wavfile
 
-sr = 22050
-duration = 2.0
-t = np.linspace(0, duration, int(sr * duration), endpoint=False)
-
-carrier = 0.6 * np.sin(2 * np.pi * 440 * t)
-pulses = 0.4 * (np.sin(2 * np.pi * 2 * t) > 0).astype(float)
-y = carrier + pulses
+sr, y = wavfile.read("labs/lab-01/assets/exemple_cours.wav")
+y = y.astype(float) / 32768.0
 
 zcr = np.mean(np.abs(np.diff(np.sign(y))) > 0)
 
@@ -132,4 +136,4 @@ print("Spectral bandwidth:", bandwidth)
 
 - Lire un signal audio comme un objet numerique.
 - Relier notions musicales et representation temps-frequence.
-- Extraire des features simples avec Librosa.
+- Extraire des features simples a partir d'un fichier audio de reference.
