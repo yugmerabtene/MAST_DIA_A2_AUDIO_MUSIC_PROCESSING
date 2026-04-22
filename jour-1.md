@@ -39,26 +39,31 @@ Savoir expliquer ce que represente un signal audio et pourquoi sa structure temp
 
 ```python
 import numpy as np
-import librosa
-import librosa.display
+from scipy import signal
 import matplotlib.pyplot as plt
 
-audio_path = "sample.wav"
-y, sr = librosa.load(audio_path, sr=None)
+sr = 22050
+duration = 2.0
+t = np.linspace(0, duration, int(sr * duration), endpoint=False)
+y = 0.6 * np.sin(2 * np.pi * 440 * t) + 0.3 * np.sin(2 * np.pi * 660 * t)
 
 print("Frequence d'echantillonnage:", sr)
-print("Duree (s):", librosa.get_duration(y=y, sr=sr))
+print("Duree (s):", duration)
 
 plt.figure(figsize=(10, 3))
-librosa.display.waveshow(y, sr=sr)
+plt.plot(t, y)
 plt.title("Forme d'onde")
+plt.xlabel("Temps (s)")
+plt.ylabel("Amplitude")
 plt.show()
 
 plt.figure(figsize=(10, 3))
-D = librosa.amplitude_to_db(abs(librosa.stft(y)), ref=np.max)
-librosa.display.specshow(D, sr=sr, x_axis='time', y_axis='log')
-plt.colorbar(format='%+2.0f dB')
+f, tt, Zxx = signal.stft(y, fs=sr, nperseg=1024)
+plt.pcolormesh(tt, f, np.abs(Zxx), shading='gouraud')
+plt.colorbar(label='Amplitude')
 plt.title("Spectrogramme")
+plt.xlabel("Temps (s)")
+plt.ylabel("Frequence (Hz)")
 plt.show()
 ```
 
@@ -100,21 +105,27 @@ Savoir expliquer a quoi servent ces features dans une chaine d'analyse musicale.
 **Code**
 
 ```python
-import librosa
+import numpy as np
 
-audio_path = "sample.wav"
-y, sr = librosa.load(audio_path, sr=None)
+sr = 22050
+duration = 2.0
+t = np.linspace(0, duration, int(sr * duration), endpoint=False)
 
-zcr = librosa.feature.zero_crossing_rate(y)
-centroid = librosa.feature.spectral_centroid(y=y, sr=sr)
-bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr)
+carrier = 0.6 * np.sin(2 * np.pi * 440 * t)
+pulses = 0.4 * (np.sin(2 * np.pi * 2 * t) > 0).astype(float)
+y = carrier + pulses
 
-tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
+zcr = np.mean(np.abs(np.diff(np.sign(y))) > 0)
 
-print("ZCR:", zcr.mean())
-print("Spectral centroid:", centroid.mean())
-print("Spectral bandwidth:", bandwidth.mean())
-print("Tempo:", tempo)
+freqs = np.fft.rfftfreq(len(y), d=1 / sr)
+spec = np.abs(np.fft.rfft(y))
+spec_sum = spec.sum()
+centroid = (freqs * spec).sum() / spec_sum
+bandwidth = np.sqrt(((freqs - centroid) ** 2 * spec).sum() / spec_sum)
+
+print("ZCR:", zcr)
+print("Spectral centroid:", centroid)
+print("Spectral bandwidth:", bandwidth)
 ```
 
 ## Synthese du jour
