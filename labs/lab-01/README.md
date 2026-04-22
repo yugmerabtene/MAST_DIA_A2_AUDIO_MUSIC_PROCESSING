@@ -4,6 +4,17 @@
 
 Manipuler un extrait audio simple, visualiser sa forme d'onde et son spectrogramme, puis extraire quelques features de base.
 
+## Vocabulaire
+
+- **Signal audio** : suite de valeurs qui represente le son dans le temps.
+- **Feature** : mesure numerique compacte extraite du signal.
+- **Forme d'onde** : lecture temporelle de l'amplitude.
+- **Spectrogramme** : lecture temps-frequence de l'energie.
+- **ZCR** : nombre de changements de signe du signal.
+- **Centroid spectral** : frequence moyenne ponderee par l'energie.
+- **Bandwidth spectrale** : largeur de dispersion autour du centroid.
+- **STFT** : methode pour observer l'evolution des frequences dans le temps.
+
 ## Fichier audio
 
 L'extrait de reference est dans `assets/exemple_cours.wav`.
@@ -80,6 +91,14 @@ Calculer quelques descripteurs simples pour caracteriser le son.
 
 **Lien avec la theorie**
 Ces features condensent l'information utile pour comparer deux sons ou preparer un modele.
+
+**Pourquoi ces features ?**
+Le but est de transformer le son brut en variables exploitables pour comparer, classer ou recommander.
+
+**Ce qu'il faut comprendre avant de coder**
+- Le signal brut est trop long et trop riche pour etre utilise tel quel directement dans un modele simple.
+- Une feature est un resume du signal qui garde une information utile.
+- Plus les features sont pertinentes, plus le modele aura de chances d'etre efficace.
 
 ```python
 import numpy as np

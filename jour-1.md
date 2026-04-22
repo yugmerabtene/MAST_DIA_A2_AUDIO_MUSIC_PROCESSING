@@ -2,6 +2,14 @@
 
 ## 1. Comprendre la structure musicale et les signaux audio
 
+**Notions cles**
+- **Signal audio** : suite de valeurs qui represente le son dans le temps.
+- **Frequence d'echantillonnage** : nombre de mesures du signal par seconde.
+- **Forme d'onde** : representation de l'amplitude au cours du temps.
+- **Spectrogramme** : representation temps-frequence de l'energie sonore.
+- **Feature** : caractere numerique extrait du signal pour decrire le son de facon compacte.
+- **Feature engineering** : choix et calcul des features utiles pour la suite du projet.
+
 **Introduction**
 Cette premiere partie pose les bases de la musique et du signal audio pour comprendre ce que l'on manipule ensuite en traitement audio.
 L'objectif est de passer d'une ecoute intuitive a une lecture technique du son.
@@ -82,9 +90,19 @@ On cherche ici a representer un morceau par quelques mesures robustes plutot que
 On extrait des mesures simples comme le zero crossing rate ou le centre spectral pour decrire le contenu sonore.
 Ces descripteurs resumeraient l'energie, la brillance ou l'activite du signal sous une forme compacte.
 
+**Pourquoi ces features ?**
+Les features reduisent un signal complexe a quelques variables interpretables. Elles rendent possible la comparaison entre morceaux et l'entrainement d'un modele.
+
 **Contexte**
 Ces caracteristiques servent a comparer des morceaux ou a preparer un dataset pour un modele de machine learning.
 Dans un systeme musical, elles peuvent aider a distinguer des genres, des instruments ou des ambiances.
+
+**Elements techniques importants**
+- **ZCR** : donne une idee de l'agitation du signal.
+- **Centroid spectral** : mesure ou se concentre l'energie dans les frequences.
+- **Bandwidth spectrale** : mesure l'etendue de cette energie.
+- **STFT** : decoupe le signal en petites fenetres pour observer son evolution dans le temps.
+- **FFT** : transforme le signal du temps vers les frequences.
 
 **Formule mathematique**
 
@@ -101,14 +119,18 @@ Le zero crossing rate mesure combien de fois le signal change de signe.
 **Lien avec la theorie**
 Un ZCR eleve correspond souvent a un signal plus agite ou plus bruité, tandis qu'un ZCR faible correspond a un signal plus stable.
 
+**Interpretation audio**
+Un son percussif ou bruité tend a avoir un ZCR plus fort qu'un son pur et stable comme une note tenue.
+
 **Decomposition mathematique**
 - `N` : nombre total d'echantillons pris en compte
 - `x_n` : valeur de l'echantillon numero `n`
-- `1(x_n x_{n-1} < 0)` : vaut `1` si le signal change de signe entre deux echantillons consecutifs, sinon `0`
+- `1[x_n x_{n-1} < 0]` : vaut `1` si le signal change de signe entre deux echantillons consecutifs, sinon `0`
 
 **Resultat attendu**
 Savoir extraire et interpreter des features audio de base.
 Savoir expliquer a quoi servent ces features dans une chaine d'analyse musicale.
+Savoir relier les nombres calcules a ce qu'on entend dans le morceau.
 
 **Code**
 
