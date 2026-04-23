@@ -29,10 +29,27 @@ flowchart LR
 
 Ce schéma montre les deux blocs du jour 2 : la classification supervisée et la recommandation par similarité.
 
+**Lire le schéma général (bloc par bloc)**
+- `Features` : colonnes numériques qui décrivent chaque morceau (ex: `zcr`, `centroid_hz`, `bandwidth_hz`, `rms`).
+- `Labels` : classe cible à prédire (ex: `classical`, `rock`, `electronic`).
+- `Train/Test split` : séparation des données en deux parties, une pour apprendre, une pour vérifier.
+- `Modèle supervisé` : algorithme qui apprend la relation `X -> y`.
+- `Matrice de confusion` : tableau qui montre les bonnes prédictions (diagonale) et les erreurs (hors diagonale).
+- `Distance entre morceaux` : mesure numérique de proximité entre deux vecteurs de features.
+- `Recommandation musicale` : sélection des morceaux avec les plus petites distances.
+
 ![Figure XY: distances de similarité entre segments audio, utile pour visualiser le classement des recommandations.](labs/lab-01/figures/similarity_ranking_xy.svg)
 
 **Lab associe**
 - `labs/lab-02/README.md`
+
+**Vocabulaire minimal à retenir**
+- `Sample` : une ligne du dataset, donc un morceau (ou un extrait).
+- `Feature vector` : toutes les features d'un sample, regroupées en un seul vecteur.
+- `X` : matrice des features, utilisée comme entrée du modèle.
+- `y` : vecteur des labels, utilisé comme cible.
+- `Target` : morceau de référence pour lequel on cherche des voisins.
+- `Top-k` : les `k` meilleurs résultats triés selon un score (ici la distance).
 
 ## Appliquer le machine learning à la classification de genres (3h30)
 
@@ -78,6 +95,13 @@ flowchart LR
 ```
 
 Ce schéma résume la logique du classifieur : des données d'entrée, un apprentissage, puis une évaluation sur des données inconnues.
+
+**Explication du schéma de classification (ligne par ligne)**
+- `Dataset audio -> Features X` : on transforme chaque morceau en nombres exploitables.
+- `Dataset audio -> Labels y` : on associe à chaque morceau son genre de référence.
+- `Features X + Labels y -> Apprentissage` : le modèle apprend des exemples annotés.
+- `Apprentissage -> Prédiction` : le modèle propose un genre pour des morceaux jamais vus.
+- `Prédiction -> Évaluation` : on mesure la qualité avec la matrice de confusion et des métriques.
 
 **Formule mathématique**
 
@@ -184,6 +208,13 @@ flowchart LR
 
 Ce schéma montre que la recommandation repose sur une comparaison mathématique entre vecteurs.
 
+**Explication du schéma de recommandation (ligne par ligne)**
+- `Morceau cible -> Vecteur de features` : on convertit le morceau de référence en vecteur numérique.
+- `Base de morceaux -> Distances` : chaque morceau de la base est comparé au morceau cible.
+- `Vecteur cible -> Distances` : la distance est calculée entre la cible et tous les autres.
+- `Distances -> Top 5 proches` : on trie les distances et on garde les plus petites.
+- `Interprétation` : plus la distance est petite, plus la similarité est forte.
+
 **Formule mathématique**
 
 $$
@@ -237,6 +268,13 @@ print(top_indices)
 Ce bloc implémente une recommandation par similarité.
 Plus la distance est faible, plus deux morceaux sont proches dans l'espace des features, ce qui soutient la logique de découverte musicale.
 Dans le projet final, ces indices pourront ensuite être reliés aux titres récupérés via l'API Spotify.
+
+## Ce que tu dois savoir expliquer à l'oral
+
+- La différence entre `feature` (entrée numérique) et `label` (classe à prédire).
+- Pourquoi on sépare train/test avant d'évaluer un modèle.
+- Comment lire une matrice de confusion sans se tromper.
+- Pourquoi un moteur de recommandation peut fonctionner avec une simple distance.
 
 ## Synthèse du jour
 
