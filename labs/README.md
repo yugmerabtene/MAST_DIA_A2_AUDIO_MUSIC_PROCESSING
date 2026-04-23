@@ -5,6 +5,7 @@ Structure des travaux pratiques du cours.
 ## Organisation
 
 - `lab-01/` : signaux audio, visualisation et features de base
+- `lab-02/` : classification de genres et recommandation par similarite
 
 ## Convention
 

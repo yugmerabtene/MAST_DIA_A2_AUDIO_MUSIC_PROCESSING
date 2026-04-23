@@ -18,9 +18,21 @@ flowchart LR
     C --> D[Matrice de confusion]
     A --> E[Distance entre morceaux]
     E --> F[Recommandation musicale]
+
+    classDef source fill:#e7f0f8,stroke:#355070,color:#10253d,stroke-width:1.2px;
+    classDef process fill:#f8fbff,stroke:#4f6d8c,color:#10253d,stroke-width:1.2px;
+    classDef output fill:#e9f7ef,stroke:#2f7d4e,color:#163121,stroke-width:1.2px;
+    class A source;
+    class B,C,D,E process;
+    class F output;
 ```
 
 Ce schéma montre les deux blocs du jour 2 : la classification supervisée et la recommandation par similarité.
+
+![Figure XY: distances de similarité entre segments audio, utile pour visualiser le classement des recommandations.](labs/lab-01/figures/similarity_ranking_xy.svg)
+
+**Lab associe**
+- `labs/lab-02/README.md`
 
 ## Appliquer le machine learning à la classification de genres (3h30)
 
@@ -56,11 +68,18 @@ flowchart LR
     C --> D
     D --> E[Prédiction]
     E --> F[Évaluation]
+
+    classDef source fill:#e7f0f8,stroke:#355070,color:#10253d,stroke-width:1.2px;
+    classDef process fill:#f8fbff,stroke:#4f6d8c,color:#10253d,stroke-width:1.2px;
+    classDef output fill:#e9f7ef,stroke:#2f7d4e,color:#163121,stroke-width:1.2px;
+    class A source;
+    class B,C,D,E process;
+    class F output;
 ```
 
 Ce schéma résume la logique du classifieur : des données d'entrée, un apprentissage, puis une évaluation sur des données inconnues.
 
-**Formule mathematique**
+**Formule mathématique**
 
 $$
 \hat{y} = \arg\max_{k} \, p(y=k \mid \mathbf{x})
@@ -74,15 +93,15 @@ Le modèle choisit la classe la plus probable à partir des caractéristiques du
 Autrement dit, le classifieur transforme les features en décision de genre.
 
 **Lien avec le code**
-Dans le code, `fit` correspond à l'apprentissage de cette règle, puis `predict` applique cette logique à de nouveaux morceaux.
+Dans le lab, on applique cette logique avec un classifieur k-NN : on compare chaque morceau de test aux morceaux d'entraînement les plus proches, puis on vote pour la classe majoritaire.
 
 **Décomposition mathématique**
 - `\mathbf{x}` : vecteur de features audio
 - `y` : classe ou genre
 - `\hat{y}` : classe prédite
 
-**Pourquoi Random Forest ?**
-Random Forest est robuste, simple à utiliser et permet déjà d'obtenir un bon point de départ sur des features audio tabulaires.
+**Pourquoi commencer par k-NN ?**
+k-NN est un bon point d'entrée pédagogique : il repose directement sur la distance entre vecteurs de features, ce qui aide à faire le lien avec la recommandation de la seconde partie.
 
 **Pourquoi tester d'autres modèles ?**
 k-NN, Random Forest ou d'autres classifieurs ne réagissent pas pareil aux mêmes features. Le but est de comparer leurs performances sur la même base de données.
@@ -95,27 +114,25 @@ Savoir entraîner et évaluer un modèle supervisé simple sur des données audi
 Savoir expliquer comment le dataset est préparé et pourquoi la séparation train/test est nécessaire.
 Savoir lire une matrice de confusion et comprendre les erreurs du modèle.
 
+**Script utilise dans cette partie**
+- `labs/lab-02/scripts/01_genre_classification.py`
+
 **Code**
 
 ```python
-# Decoupage des donnees et entrainement d'un classifieur.
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix
+# Exemple minimal de classification k-NN (distance euclidienne).
+import numpy as np
 
-# Separation train / test.
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+def knn_predict(X_train, y_train, X_test, k=3):
+    y_pred = []
+    for sample in X_test:
+        distances = np.linalg.norm(X_train - sample, axis=1)
+        nn = np.argsort(distances)[:k]
+        labels, counts = np.unique(y_train[nn], return_counts=True)
+        y_pred.append(labels[np.argmax(counts)])
+    return np.array(y_pred)
 
-# Modele de classification.
-model = RandomForestClassifier(random_state=42)
-# Apprentissage sur les donnees d'entrainement.
-model.fit(X_train, y_train)
-
-# Prediction sur les donnees de test.
-y_pred = model.predict(X_test)
-# Evaluation des performances.
-print(confusion_matrix(y_test, y_pred))
-print(classification_report(y_test, y_pred))
+# y_pred = knn_predict(X_train, y_train, X_test, k=3)
 ```
 
 **Explication du code**
@@ -156,11 +173,18 @@ flowchart LR
     C[Base de morceaux] --> D[Distances]
     B --> D
     D --> E[Top 5 proches]
+
+    classDef source fill:#e7f0f8,stroke:#355070,color:#10253d,stroke-width:1.2px;
+    classDef process fill:#f8fbff,stroke:#4f6d8c,color:#10253d,stroke-width:1.2px;
+    classDef output fill:#e9f7ef,stroke:#2f7d4e,color:#163121,stroke-width:1.2px;
+    class A,C source;
+    class B,D process;
+    class E output;
 ```
 
 Ce schéma montre que la recommandation repose sur une comparaison mathématique entre vecteurs.
 
-**Formule mathematique**
+**Formule mathématique**
 
 $$
 d(\mathbf{x}, \mathbf{z}) = \sqrt{\sum_{i=1}^{d} (x_i - z_i)^2}
@@ -174,7 +198,7 @@ Cette distance mesure à quel point deux morceaux sont proches dans l'espace des
 Plus la distance est petite, plus les morceaux se ressemblent selon les descripteurs choisis.
 
 **Lien avec le code**
-`euclidean_distances` calcule cette distance pour chaque morceau de la base, puis `argsort` permet de récupérer les indices des plus proches.
+Le script du lab standardise d'abord les features, calcule les distances euclidiennes avec `np.linalg.norm`, puis utilise `np.argsort` pour récupérer les voisins les plus proches.
 
 **Décomposition mathématique**
 - `\mathbf{x}` : vecteur du morceau de référence
@@ -186,18 +210,26 @@ Savoir construire un système simple de recommandation à partir de descripteurs
 Savoir expliquer pourquoi la distance permet de remplacer une comparaison manuelle entre morceaux.
 Savoir justifier le choix des 5 recommandations les plus proches.
 
+**Script utilise dans cette partie**
+- `labs/lab-02/scripts/02_similarity_recommender.py`
+
 **Code**
 
 ```python
-# Mesure de distance entre morceaux.
-from sklearn.metrics.pairwise import euclidean_distances
+import numpy as np
 
-# Calcul des distances entre un morceau cible et la base de morceaux.
-distances = euclidean_distances([target_vector], feature_matrix)[0]
-# Selection des morceaux les plus proches.
-top_indices = distances.argsort()[:5]
+# Standardisation simple (moyenne 0, variance 1).
+mean = feature_matrix.mean(axis=0)
+std = feature_matrix.std(axis=0)
+std[std == 0.0] = 1.0
+feature_matrix_scaled = (feature_matrix - mean) / std
 
-# Affichage des indices recommandes.
+# Distances du morceau cible vers toute la base.
+distances = np.linalg.norm(feature_matrix_scaled - feature_matrix_scaled[target_idx], axis=1)
+
+# Top 5 plus proches (hors morceau cible).
+ranking = np.argsort(distances)
+top_indices = [i for i in ranking if i != target_idx][:5]
 print(top_indices)
 ```
 
